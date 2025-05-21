@@ -1,7 +1,7 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 // /* eslint-disable react/self-closing-comp */
-import React from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Image,
@@ -24,11 +24,11 @@ import {CommonButton, CommonTextInput} from '../components';
 
 const LoginScreen = () => {
   const navigation = useNavigation();
-  const [username, setUserName] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [username, setUserName] = useState('');
+  const [password, setPassword] = useState('');
 
-  const [showPassword, setShowPassword] = React.useState(true);
-  const [isEnabled, setIsEnabled] = React.useState(true);
+  const [showPassword, setShowPassword] = useState(true);
+  const [isEnabled, setIsEnabled] = useState(true);
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);

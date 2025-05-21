@@ -5,5 +5,9 @@ export const images = {
    eyeInvisibleIcon: require('../assets/icons/eye.png'),
    loginImage: require('../assets/images/login_img.jpg'),
    registerImage: require('../assets/images/register.jpg'),
-   phoneIcon: require('../assets/icons/phone-call.png')
+   phoneIcon: require('../assets/icons/phone-call.png'),
+   homeIcon : require('../assets/icons/home.png'),
+   whislistIcon : require('../assets/icons/package.png'),
+   AboutIcon : require('../assets/icons/About.png'),
+   LogoutIcon : require('../assets/icons/logout.png')
 }

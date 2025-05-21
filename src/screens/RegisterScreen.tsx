@@ -29,7 +29,7 @@ const RegisterScreen = () => {
     setShowPassword(!showPassword);
   };
   const ToLoginScreen = () => {
-    navigation.navigate('LoginScreen');
+    navigation.navigate('DrawerNavigation');
   };
   const SubmitBtn = () => {
     Alert.alert('Submited ');

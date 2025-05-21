@@ -1,10 +1,10 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import FlexPracticeScreen from '../screens/FlexPracticeScreen';
-
-import LoginScreen from '../screens/LoginScreen';
-import RegisterScreen from '../screens/RegisterScreen';
+import {Screens} from '../screens';
+import DrawerNavigation from './DrawerNavigation';
 
 const Stack = createNativeStackNavigator();
+
+// const homeIcon = ({focused,color,size})=>{images.homeIcon ,color={'red'}, size={'12'}}
 
 function RootStack({}) {
   return (
@@ -13,9 +13,15 @@ function RootStack({}) {
         headerShown: false,
       }}
       initialRouteName="RegisterScreen">
-      <Stack.Screen name="FlexScreen" component={FlexPracticeScreen} />
-      <Stack.Screen name="LoginScreen" component={LoginScreen} />
-      <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+      <Stack.Screen name="FlexScreen" component={Screens.FlexPracticeScreen} />
+      <Stack.Screen name="LoginScreen" component={Screens.LoginScreen} />
+      <Stack.Screen name="RegisterScreen" component={Screens.RegisterScreen} />
+      {/* <Stack.Screen name="AboutScreen" component={Screens.AboutScreen} /> */}
+      {/* <Stack.Screen name="HomeScreen" component={Screens.HomeScreen} />
+      <Stack.Screen name="WhislistScreen" component={Screens.WhislistScreen} />
+      <Stack.Screen name="ProfileScreen" component={Screens.ProfileScreen} /> */}
+      {/* <Stack.Screen name="BottomBar" component={BottomTabNavigation} /> */}
+      <Stack.Screen name="DrawerNavigation" component={DrawerNavigation} />
     </Stack.Navigator>
   );
 }
