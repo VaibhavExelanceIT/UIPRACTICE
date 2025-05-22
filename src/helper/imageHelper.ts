@@ -9,5 +9,7 @@ export const images = {
    homeIcon : require('../assets/icons/home.png'),
    whislistIcon : require('../assets/icons/package.png'),
    AboutIcon : require('../assets/icons/About.png'),
-   LogoutIcon : require('../assets/icons/logout.png')
+   LogoutIcon : require('../assets/icons/logout.png'),
+   ImageIcon : require('../assets/icons/image.png'),
+   CameraIcon : require('../assets/icons/camera2.png')
 }

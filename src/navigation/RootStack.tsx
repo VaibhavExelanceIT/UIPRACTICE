@@ -16,6 +16,12 @@ function RootStack({}) {
       <Stack.Screen name="FlexScreen" component={Screens.FlexPracticeScreen} />
       <Stack.Screen name="LoginScreen" component={Screens.LoginScreen} />
       <Stack.Screen name="RegisterScreen" component={Screens.RegisterScreen} />
+      <Stack.Screen
+        name="ImageCropPicker"
+        component={Screens.ImageCropPicker}
+      />
+      <Stack.Screen name="linearGradient" component={Screens.linearGradient} />
+
       {/* <Stack.Screen name="AboutScreen" component={Screens.AboutScreen} /> */}
       {/* <Stack.Screen name="HomeScreen" component={Screens.HomeScreen} />
       <Stack.Screen name="WhislistScreen" component={Screens.WhislistScreen} />

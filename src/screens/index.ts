@@ -9,6 +9,8 @@ import HomeScreen from './tabs/HomeScreen';
 // import HomeScreen from './tabs/homeScreen';
 import ProfileScreen from './tabs/ProfileScreen';
 import WhislistScreen from './tabs/WhislistScreen';
+import ImageCropPicker from './thirdPratyLibrariesImplementation/ImageCropPicker';
+import linearGradient from './thirdPratyLibrariesImplementation/linearGradient';
 
 export const Screens = {
     HomeScreen2,
@@ -18,5 +20,7 @@ export const Screens = {
     RegisterScreen,
     ProfileScreen,
     WhislistScreen,
-    AboutScreen
+    AboutScreen,
+    ImageCropPicker,
+    linearGradient
 }
