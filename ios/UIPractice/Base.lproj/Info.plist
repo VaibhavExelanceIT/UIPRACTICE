@@ -24,6 +24,9 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Want a photo access for profile Photo.</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 	  <!-- Do not change NSAllowsArbitraryLoads to true, or you will risk app rejection! -->
