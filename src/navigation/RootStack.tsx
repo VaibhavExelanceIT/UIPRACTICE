@@ -1,31 +1,39 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {Screens} from '../screens';
+
 import DrawerNavigation from './DrawerNavigation';
+import {
+  FlexPracticeScreen,
+  LoginScreen,
+  ImageCropPicker,
+  RegisterScreen,
+  SnapCarousel,
+  linearGradient,
+  VisionCamera,
+} from '../screens';
 
 const Stack = createNativeStackNavigator();
 
 // const homeIcon = ({focused,color,size})=>{images.homeIcon ,color={'red'}, size={'12'}}
 
-function RootStack({}) {
+function RootStack() {
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
       }}
       initialRouteName="RegisterScreen">
-      <Stack.Screen name="FlexScreen" component={Screens.FlexPracticeScreen} />
-      <Stack.Screen name="LoginScreen" component={Screens.LoginScreen} />
-      <Stack.Screen name="RegisterScreen" component={Screens.RegisterScreen} />
-      <Stack.Screen
-        name="ImageCropPicker"
-        component={Screens.ImageCropPicker}
-      />
-      <Stack.Screen name="linearGradient" component={Screens.linearGradient} />
+      <Stack.Screen name="FlexScreen" component={FlexPracticeScreen} />
+      <Stack.Screen name="LoginScreen" component={LoginScreen} />
+      <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+      <Stack.Screen name="ImageCropPicker" component={ImageCropPicker} />
+      <Stack.Screen name="linearGradient" component={linearGradient} />
+      <Stack.Screen name="snapcarousel" component={SnapCarousel} />
+      <Stack.Screen name="visioncamera" component={VisionCamera} />
 
-      {/* <Stack.Screen name="AboutScreen" component={Screens.AboutScreen} /> */}
-      {/* <Stack.Screen name="HomeScreen" component={Screens.HomeScreen} />
-      <Stack.Screen name="WhislistScreen" component={Screens.WhislistScreen} />
-      <Stack.Screen name="ProfileScreen" component={Screens.ProfileScreen} /> */}
+      {/* <Stack.Screen name="AboutScreen" component={AboutScreen} /> */}
+      {/* <Stack.Screen name="HomeScreen" component={HomeScreen} />
+      <Stack.Screen name="WhislistScreen" component={WhislistScreen} />
+      <Stack.Screen name="ProfileScreen" component={ProfileScreen} /> */}
       {/* <Stack.Screen name="BottomBar" component={BottomTabNavigation} /> */}
       <Stack.Screen name="DrawerNavigation" component={DrawerNavigation} />
     </Stack.Navigator>

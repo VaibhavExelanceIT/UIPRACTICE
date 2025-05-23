@@ -1,23 +1,36 @@
-import React, {useRef, useState} from 'react';
-import {Button, Image, ImageProps, StyleSheet, View} from 'react-native';
-import {ImageOrVideo} from 'react-native-image-crop-picker';
+import React, {
+  // useRef,
+  useState,
+} from 'react';
+import {
+  Button,
+  Image,
+  //  ImageProps,
+  StyleSheet,
+  View,
+} from 'react-native';
+// import {ImageOrVideo} from 'react-native-image-crop-picker';
 // import {CommonAvatar} from '../../components/common/CommonAvatar';
 // import {CommonProfile} from '../../components/common/CommonProfile';
 import ImagePicker from 'react-native-image-crop-picker';
 import {images} from '../../helper';
-import {VideoRef, Video} from 'react-native-video';
+import {
+  // VideoRef,
+  Video,
+} from 'react-native-video';
 // import {Image} from 'react-native-reanimated/lib/typescript/Animated';
 
-interface AvatarProps extends ImageProps {
-  onChange?: (image: ImageOrVideo) => void;
-}
-const ImageCropPicker = (props: AvatarProps) => {
-  const videoRef = useRef<VideoRef>(null);
+// interface AvatarProps extends ImageProps {
+//   onChange?: (image: ImageOrVideo) => void;
+// }
+const ImageCropPicker = () => {
+  // const videoRef = useRef<VideoRef>(null);
+
   // const [uri, setUri] = useState(props.source?.uri || undefined);
-  const [uri, setUri] = useState(props.source?.uri || undefined);
-  const [VideoUri, setVideoUri] = useState(
-    videoRef.source?.VideoUri || undefined,
-  );
+  const [uri, setUri] = useState<string>();
+  // props.source?.uri || undefined,
+  const [VideoUri, setVideoUri] = useState<string>();
+  // videoRef.source?.VideoUri || undefined,
 
   // console.log(uri);
   // console.log(videoRef.current);
@@ -28,7 +41,7 @@ const ImageCropPicker = (props: AvatarProps) => {
   //   console.log(image);
   // };
 
-  const ImageGallery = () => {
+  const imageGallery = () => {
     ImagePicker.openPicker({
       width: 300,
       height: 400,
@@ -38,7 +51,7 @@ const ImageCropPicker = (props: AvatarProps) => {
       // console.log(image.path);
       // onAvatarChange(image);
       setUri(image.path);
-      props.onChange?.(image);
+      // props.onChange?.(image);
     });
   };
 
@@ -47,7 +60,7 @@ const ImageCropPicker = (props: AvatarProps) => {
       mediaType: 'video',
     }).then(video => {
       setVideoUri(video.path);
-      videoRef.save?.(video);
+      // videoRef.save?.(video);
     });
   };
 
@@ -58,7 +71,7 @@ const ImageCropPicker = (props: AvatarProps) => {
       cropping: true,
     }).then(image => {
       setUri(image.path);
-      props.onChange?.(image);
+      // props.onChange?.(image);
     });
   };
 
@@ -67,16 +80,19 @@ const ImageCropPicker = (props: AvatarProps) => {
       mediaType: 'video',
     }).then(video => {
       setVideoUri(video.path);
-      videoRef.save?.(video);
+      // videoRef.save?.(video);
     });
   };
 
+  const videoUri = VideoUri
+    ? {uri: VideoUri}
+    : require('../../assets/images/video.mp4');
   return (
     <View style={styles.container}>
       <View style={styles.scroll}>
         <Video
           style={styles.backgroundVideo}
-          ref={videoRef}
+          // ref={videoRef}
           onBuffer={e => {
             e.isBuffering;
           }}
@@ -84,11 +100,7 @@ const ImageCropPicker = (props: AvatarProps) => {
             e.error;
           }}
           controls={true}
-          source={
-            VideoUri
-              ? {uri: VideoUri}
-              : require('../../assets/images/video.mp4')
-          }
+          source={videoUri}
         />
       </View>
       <View style={styles.scroll}>
@@ -101,7 +113,7 @@ const ImageCropPicker = (props: AvatarProps) => {
         />
       </View>
       <View style={styles.btn}>
-        <Button onPress={ImageGallery} title="Image from Gallery" />
+        <Button onPress={imageGallery} title="Image from Gallery" />
       </View>
       <View style={styles.btn}>
         <Button onPress={VideoGallery} title="Video from Gallery" />

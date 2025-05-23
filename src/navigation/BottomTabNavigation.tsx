@@ -2,8 +2,14 @@
 import {Easing, Image, StyleSheet} from 'react-native';
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Screens} from '../screens';
+
 import {images} from '../helper';
+import {
+  AboutScreen,
+  HomeScreen,
+  ProfileScreen,
+  WhislistScreen,
+} from '../screens';
 // import {Image} from 'react-native-reanimated/lib/typescript/Animated';
 
 const Tab = createBottomTabNavigator();
@@ -13,7 +19,7 @@ const BottomTabNavigation = () => {
       <Tab.Screen
         name={'HomeScreen'}
         // getComponent={ProfileScreenWithDrawer}
-        component={Screens.HomeScreen}
+        component={HomeScreen}
         options={{
           transitionSpec: {
             animation: 'timing',
@@ -32,7 +38,7 @@ const BottomTabNavigation = () => {
       />
       <Tab.Screen
         name={'WhislistScreen'}
-        component={Screens.WhislistScreen}
+        component={WhislistScreen}
         options={{
           transitionSpec: {
             animation: 'timing',
@@ -52,7 +58,7 @@ const BottomTabNavigation = () => {
       />
       <Tab.Screen
         name={'ProfileScreen'}
-        component={Screens.ProfileScreen}
+        component={ProfileScreen}
         options={{
           transitionSpec: {
             animation: 'timing',
@@ -71,7 +77,7 @@ const BottomTabNavigation = () => {
       />
       <Tab.Screen
         name={'AboutScreen'}
-        component={Screens.AboutScreen}
+        component={AboutScreen}
         options={{
           transitionSpec: {
             animation: 'timing',

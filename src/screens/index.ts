@@ -11,8 +11,10 @@ import ProfileScreen from './tabs/ProfileScreen';
 import WhislistScreen from './tabs/WhislistScreen';
 import ImageCropPicker from './thirdPratyLibrariesImplementation/ImageCropPicker';
 import linearGradient from './thirdPratyLibrariesImplementation/linearGradient';
+import SnapCarousel from './thirdPratyLibrariesImplementation/SnapCarousel';
+import VisionCamera from './thirdPratyLibrariesImplementation/VisionCamera';
 
-export const Screens = {
+export {
     HomeScreen2,
     HomeScreen,
     LoginScreen,
@@ -22,5 +24,7 @@ export const Screens = {
     WhislistScreen,
     AboutScreen,
     ImageCropPicker,
-    linearGradient
-}
+    linearGradient,
+    SnapCarousel,
+    VisionCamera,
+};

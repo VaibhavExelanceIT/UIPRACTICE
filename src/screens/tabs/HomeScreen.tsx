@@ -47,17 +47,37 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Button
-        title="Image Crop Picker"
-        onPress={() => {
-          navigation.navigate('ImageCropPicker');
-        }}></Button>
+      <View style={styles.btn}>
+        <Button
+          title="Image Crop Picker"
+          onPress={() => {
+            navigation.navigate('ImageCropPicker');
+          }}></Button>
+      </View>
 
-      <Button
-        title="Linear Gradient"
-        onPress={() => {
-          navigation.navigate('linearGradient');
-        }}></Button>
+      <View style={styles.btn}>
+        <Button
+          title="Linear Gradient"
+          onPress={() => {
+            navigation.navigate('linearGradient');
+          }}></Button>
+      </View>
+
+      <View style={styles.btn}>
+        <Button
+          title="Snap carousel"
+          onPress={() => {
+            navigation.navigate('snapcarousel');
+          }}></Button>
+      </View>
+
+      <View style={styles.btn}>
+        <Button
+          title="Vision Camera"
+          onPress={() => {
+            navigation.navigate('visioncamera');
+          }}></Button>
+      </View>
 
       {/* <Button
         title="Open Drawer"
@@ -81,14 +101,18 @@ const HomeScreen = () => {
 
       {/* <Button onPress={() => setCount(count + 1)} title="Increment" />
         <Button onPress={() => setCount(count - 1)} title="Decrement" /> */}
+      {/* </View> */}
+      {/* //{' '} */}
     </View>
-    // </View>
   );
 };
 
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+  btn: {
+    marginBottom: 15,
+  },
   container: {
     flex: 1,
     padding: 20,
