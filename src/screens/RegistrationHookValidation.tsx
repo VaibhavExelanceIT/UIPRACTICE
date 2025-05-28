@@ -1,9 +1,16 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
+
 import {Controller, useForm} from 'react-hook-form';
 import {ScrollView} from 'react-native';
 
 const RegistrationHookValidation = () => {
+  // const passwordInputRef = useRef(null);
+  // const [step, setStep] = useState(1);
+  const numberRef = useRef<TextInput>(null);
+  const emailRef = useRef<TextInput>(null);
+  const passwordRef = useRef<TextInput>(null);
+  const confirmPassRef = useRef<TextInput>(null);
   const {
     control,
     handleSubmit,
@@ -34,6 +41,7 @@ const RegistrationHookValidation = () => {
     <ScrollView>
       <View style={styles.container}>
         <Text>Registration Validation by Hook</Text>
+
         <Controller
           control={control}
           rules={{
@@ -46,11 +54,14 @@ const RegistrationHookValidation = () => {
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
+              returnKeyType={'next'}
+              onSubmitEditing={() => numberRef.current?.focus()}
               keyboardType="ascii-capable"
             />
           )}
           name="userName"
         />
+
         {errors.userName && (
           <Text style={styles.validationtext}>UserName is required.</Text>
         )}
@@ -64,11 +75,14 @@ const RegistrationHookValidation = () => {
           }}
           render={({field: {onChange, onBlur, value}}) => (
             <TextInput
+              ref={numberRef}
               style={styles.inputTextStyle}
               placeholder="Phone no"
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
+              returnKeyType="next"
+              onSubmitEditing={() => emailRef.current?.focus()}
               keyboardType="decimal-pad"
             />
           )}
@@ -90,11 +104,14 @@ const RegistrationHookValidation = () => {
           }}
           render={({field: {onChange, onBlur, value}}) => (
             <TextInput
+              ref={emailRef}
               style={styles.inputTextStyle}
               placeholder="Email ID"
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
+              returnKeyType={'next'}
+              onSubmitEditing={() => passwordRef.current?.focus()}
               keyboardType="email-address"
             />
           )}
@@ -116,11 +133,14 @@ const RegistrationHookValidation = () => {
           }}
           render={({field: {onChange, onBlur, value}}) => (
             <TextInput
+              ref={passwordRef}
               style={styles.inputTextStyle}
               placeholder="Password"
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
+              returnKeyType="next"
+              onSubmitEditing={() => confirmPassRef.current?.focus()}
               keyboardType="ascii-capable"
             />
           )}
@@ -138,11 +158,16 @@ const RegistrationHookValidation = () => {
           }}
           render={({field: {onChange, onBlur, value}}) => (
             <TextInput
+              ref={confirmPassRef}
               style={styles.inputTextStyle}
               placeholder="confirm Password"
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
+              returnKeyType="done"
+              onSubmitEditing={() => {
+                handleSubmit(onSubmit);
+              }}
               keyboardType="ascii-capable"
             />
           )}

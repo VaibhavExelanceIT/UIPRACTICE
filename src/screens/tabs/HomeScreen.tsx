@@ -1,6 +1,7 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 // import {ImagePicker} from 'react-native-image-crop-picker';
+import React from 'react';
 import {Button, StyleSheet, View} from 'react-native';
 
 // import RootStack from '../../navigation/RootStack';
@@ -78,31 +79,6 @@ const HomeScreen = () => {
             navigation.navigate('visioncamera');
           }}></Button>
       </View>
-
-      {/* <Button
-        title="Open Drawer"
-        onPress={() => navigation?.openDrawer()}></Button>
-
-      <View style={styles.container2}>
-        <TextInput ref={inputRef} value={Age} />
-        <Text>
-          Clicked time: {Age}-- {`${isTrue.current}`}
-        </Text>
-        <Button
-          onPress={() => {
-            setAge(a => a + 1);
-
-            isTrue.current = !isTrue.current;
-          }}
-          title="add"></Button> */}
-      {/* <Text>num : {num}</Text>
-        <Button onPress={() => setNum(0)} title="Check" /> */}
-      {/* <Text>Count: {count}</Text> */}
-
-      {/* <Button onPress={() => setCount(count + 1)} title="Increment" />
-        <Button onPress={() => setCount(count - 1)} title="Decrement" /> */}
-      {/* </View> */}
-      {/* //{' '} */}
     </View>
   );
 };

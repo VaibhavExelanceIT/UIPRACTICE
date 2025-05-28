@@ -43,17 +43,8 @@ const RegisterValidationScreen = () => {
     navigation.navigate('registrationHook');
   };
 
-  // useEffect(() => {
-  //   usernameValidation;
-
-  //   phoneValidation;
-  //   errorValidation;
-  //   passwordValidation;
-  //   confirmPasswordValidation;
-  // }, [username, email, password, phoneno, confirmpassword]);
   const usernameValidation = (e: string) => {
     const regex = /^[a-zA-Z]{2,20}$/;
-    // console.log(regex.test(e));
     if (!regex.test(e)) {
       setError(true);
     } else {
@@ -65,7 +56,6 @@ const RegisterValidationScreen = () => {
 
   const phoneValidation = (e: string) => {
     const regex = /^[0-9]{10}/;
-    // console.log(regex.test(e));
     if (regex.test(e)) {
       setPhoneNoError(false);
     } else {
@@ -89,9 +79,6 @@ const RegisterValidationScreen = () => {
 
     console.log(regex.test(e));
 
-    // console.log(/\s g/);
-    // console.log('regex ==>>', regex.test(e));
-    // console.log('length ==>>', e.length >= 6 && e.length <= 15);
     if (regex.test(e) && e.length >= 6 && e.length <= 15) {
       console.log('This is right');
       setPasswordError(false);
@@ -122,7 +109,6 @@ const RegisterValidationScreen = () => {
           <CommonTextInput
             leftIcon={images.userIcon}
             leftIconStyle={styles.logo}
-            // onChangeText={(text: SetStateAction<string>) => setUserName(text)}
             value={username}
             style={styles.inputfont}
             placeholder="Enter Username"
@@ -173,12 +159,9 @@ const RegisterValidationScreen = () => {
             leftIcon={images.passwordIcon}
             leftIconStyle={styles.logo}
             placeholder="Enter password"
-            // autoCapitalize="none"
-            // autoCorrect={false}
             value={password}
             style={styles.inputfont}
             onChangeText={e => passwordValidation(e)}
-            // textContentType="newPassword"
             secureTextEntry={showPassword}
             rightIcon={images.eyeInvisibleIcon}
             rightIconStyle={styles.logo}
@@ -199,12 +182,9 @@ const RegisterValidationScreen = () => {
             leftIcon={images.passwordIcon}
             leftIconStyle={styles.logo}
             placeholder="Enter confirm password"
-            // autoCapitalize="none"
-            // autoCorrect={false}
             value={confirmpassword}
             style={styles.inputfont}
             onChangeText={e => confirmPasswordValidation(e)}
-            // textContentType="newPassword"
             secureTextEntry={showConfirmPassword}
             rightIcon={images.eyeInvisibleIcon}
             rightIconStyle={styles.logo}
@@ -228,7 +208,6 @@ const RegisterValidationScreen = () => {
               style={[styles.switchStyle]}
               trackColor={{false: '#fffff', true: '#192f40'}}
               thumbColor={'#f4f3f4'}
-              // ios_backgroundColor="#3e3e3e"
               onValueChange={toggleSwitch}
               value={isEnabled}
             />
@@ -236,7 +215,6 @@ const RegisterValidationScreen = () => {
 
           <CommonButton
             btnText="Sign Up"
-            // btnStyle={styles.btnBg}
             onPress={SubmitBtn}
             textStyle={styles.submitTitle}
             btnStyle={undefined}
@@ -290,8 +268,6 @@ const styles = StyleSheet.create({
     paddingVertical: hp(15),
     paddingHorizontal: wp(15),
     backgroundColor: '#ffffff',
-    // justifyContent: 'center',
-    // alignItems: 'center',
   },
   title: {
     fontSize: 50,

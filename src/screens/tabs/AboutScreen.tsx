@@ -1,5 +1,6 @@
-import {Alert, Button, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
+import {Alert, StyleSheet, Text, View} from 'react-native';
+
 import {TextInput} from 'react-native-gesture-handler';
 
 const AboutScreen = () => {

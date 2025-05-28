@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/no-unstable-nested-components */
 import {
@@ -8,7 +9,7 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -16,7 +17,6 @@ import {
 } from '@react-navigation/drawer';
 import {images} from '../helper/imageHelper';
 import BottomTabNavigation from '../navigation/BottomTabNavigation';
-import {Screens} from '../screens';
 
 const Drawer = createDrawerNavigator();
 const DrawerNavigation = () => {

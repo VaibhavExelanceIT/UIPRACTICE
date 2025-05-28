@@ -1,4 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
+import React from 'react';
 import {
   StyleSheet,
   StyleProp,
@@ -12,7 +13,7 @@ import {
   TouchableOpacity,
   KeyboardTypeOptions,
 } from 'react-native';
-import React from 'react';
+
 // import {  } from 'react-native';
 import {hp, wp} from '../../helper';
 

@@ -1,6 +1,7 @@
-/* eslint-disable react/no-unstable-nested-components */
-import {Easing, Image, StyleSheet} from 'react-native';
 import React from 'react';
+import {Easing, Image, StyleSheet} from 'react-native';
+/* eslint-disable react/no-unstable-nested-components */
+
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import {images} from '../helper';
