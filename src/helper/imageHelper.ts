@@ -18,5 +18,7 @@ export const images = {
    Img4 :require('../assets/images/img4.jpg'),
    Img5 :require('../assets/images/img5.jpg'),
    Img6 :require('../assets/images/img6.jpg'),
+   flip: require('../assets/icons/flip.png'),
+   mail : require('../assets/icons/mail.png')
 
 }

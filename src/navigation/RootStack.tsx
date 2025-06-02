@@ -9,6 +9,9 @@ import {
   SnapCarousel,
   linearGradient,
   VisionCamera,
+  RegisterValidationScreen,
+  RegistrstionFormikValidation,
+  RegistrationHookValidation,
 } from '../screens';
 
 const Stack = createNativeStackNavigator();
@@ -29,6 +32,18 @@ function RootStack() {
       <Stack.Screen name="linearGradient" component={linearGradient} />
       <Stack.Screen name="snapcarousel" component={SnapCarousel} />
       <Stack.Screen name="visioncamera" component={VisionCamera} />
+      <Stack.Screen
+        name="registerValidation"
+        component={RegisterValidationScreen}
+      />
+      <Stack.Screen
+        name="registrationFormik"
+        component={RegistrstionFormikValidation}
+      />
+      <Stack.Screen
+        name="registrationHook"
+        component={RegistrationHookValidation}
+      />
 
       {/* <Stack.Screen name="AboutScreen" component={AboutScreen} /> */}
       {/* <Stack.Screen name="HomeScreen" component={HomeScreen} />

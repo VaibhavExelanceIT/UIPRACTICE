@@ -91,6 +91,7 @@ const ImageCropPicker = () => {
     <View style={styles.container}>
       <View style={styles.scroll}>
         <Video
+          // controlsStyles={true}
           style={styles.backgroundVideo}
           // ref={videoRef}
           onBuffer={e => {
@@ -133,6 +134,8 @@ export default ImageCropPicker;
 const styles = StyleSheet.create({
   backgroundVideo: {
     position: 'absolute',
+    // borderRightColor: 'black',
+    backgroundColor: 'black',
     top: 0,
     left: 0,
     bottom: 0,
