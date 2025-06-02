@@ -162,6 +162,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+
     backgroundColor: '#d8d8db',
   },
   avatar: {

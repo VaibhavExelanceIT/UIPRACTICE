@@ -14,6 +14,9 @@ import {
   RegisterValidationScreen,
   RegistrstionFormikValidation,
   RegistrationHookValidation,
+  RegisterScreenUiTask,
+  LoginScreenUITask,
+  HomeScreenUiTask,
 } from '../screens';
 
 const Stack = createNativeStackNavigator();
@@ -26,7 +29,7 @@ function RootStack() {
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName="RegisterScreen">
+      initialRouteName="RegisterationUiTask">
       <Stack.Screen name="FlexScreen" component={FlexPracticeScreen} />
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
       <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
@@ -46,6 +49,12 @@ function RootStack() {
         name="registrationHook"
         component={RegistrationHookValidation}
       />
+      <Stack.Screen
+        name="RegisterationUiTask"
+        component={RegisterScreenUiTask}
+      />
+      <Stack.Screen name="LoginUiTask" component={LoginScreenUITask} />
+      <Stack.Screen name="HomeUiTask" component={HomeScreenUiTask} />
 
       {/* <Stack.Screen name="AboutScreen" component={AboutScreen} /> */}
       {/* <Stack.Screen name="HomeScreen" component={HomeScreen} />

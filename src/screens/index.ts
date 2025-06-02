@@ -16,6 +16,9 @@ import VisionCamera from './thirdPratyLibrariesImplementation/VisionCamera';
 import RegisterValidationScreen from './RegisterValidationScreen';
 import RegistrstionFormikValidation from './RegistrstionFormikValidation';
 import RegistrationHookValidation from './RegistrationHookValidation';
+import HomeScreenUiTask from './practice_ui_task/HomeScreen';
+import RegisterScreenUiTask from './practice_ui_task/RegisterScreenUiTask';
+import LoginScreenUITask from './practice_ui_task/LoginScreenUITask';
 
 export {
     HomeScreen2,
@@ -33,4 +36,7 @@ export {
     RegisterValidationScreen,
     RegistrstionFormikValidation,
     RegistrationHookValidation,
+    HomeScreenUiTask,
+    RegisterScreenUiTask,
+    LoginScreenUITask
 };
