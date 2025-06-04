@@ -1,7 +1,9 @@
 import * as React from 'react';
+
 import {ImageOrVideo} from 'react-native-image-crop-picker';
-import {CommonAvatar} from '../../components/common/CommonAvatar';
+
 import {images} from '../../helper';
+import {CommonAvatar} from '../../components/common/CommonAvatar';
 
 export const CommonProfile = () => {
   const onAvatarChange = (image: ImageOrVideo) => {

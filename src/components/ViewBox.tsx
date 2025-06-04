@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   StyleProp,
   StyleSheet,
@@ -6,7 +7,6 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import React from 'react';
 
 interface ViewBoxProps {
   text1?: number;

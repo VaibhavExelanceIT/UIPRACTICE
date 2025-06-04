@@ -1,12 +1,13 @@
 /* eslint-disable react/self-closing-comp */
+import React from 'react';
 import {
-  StyleSheet,
+  Text,
   StyleProp,
   ViewStyle,
+  StyleSheet,
   TouchableOpacity,
-  Text,
 } from 'react-native';
-import React from 'react';
+
 import {hp, wp} from '../../helper';
 
 interface ButtonProps {

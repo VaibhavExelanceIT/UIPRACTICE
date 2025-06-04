@@ -23,6 +23,7 @@ const RegisterScreen = () => {
   const [phoneno, setPhoneNo] = useState('');
   const [showPassword, setShowPassword] = useState(true);
   const [isEnabled, setIsEnabled] = useState(true);
+
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   const toggleShowPassword = () => {

@@ -13,9 +13,6 @@ import ImageCropPicker from './thirdPratyLibrariesImplementation/ImageCropPicker
 import linearGradient from './thirdPratyLibrariesImplementation/linearGradient';
 import SnapCarousel from './thirdPratyLibrariesImplementation/SnapCarousel';
 import VisionCamera from './thirdPratyLibrariesImplementation/VisionCamera';
-import RegisterValidationScreen from './RegisterValidationScreen';
-import RegistrstionFormikValidation from './RegistrstionFormikValidation';
-import RegistrationHookValidation from './RegistrationHookValidation';
 
 export {
     HomeScreen2,
@@ -30,7 +27,4 @@ export {
     linearGradient,
     SnapCarousel,
     VisionCamera,
-    RegisterValidationScreen,
-    RegistrstionFormikValidation,
-    RegistrationHookValidation,
 };

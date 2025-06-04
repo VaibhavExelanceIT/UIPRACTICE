@@ -1,6 +1,8 @@
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import React from 'react';
 
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import DrawerNavigation from './DrawerNavigation';
+
 import {
   FlexPracticeScreen,
   LoginScreen,
@@ -9,9 +11,6 @@ import {
   SnapCarousel,
   linearGradient,
   VisionCamera,
-  RegisterValidationScreen,
-  RegistrstionFormikValidation,
-  RegistrationHookValidation,
 } from '../screens';
 
 const Stack = createNativeStackNavigator();
@@ -24,7 +23,7 @@ function RootStack() {
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName="RegisterScreen">
+      initialRouteName="RegisterationUiTask">
       <Stack.Screen name="FlexScreen" component={FlexPracticeScreen} />
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
       <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
@@ -32,18 +31,6 @@ function RootStack() {
       <Stack.Screen name="linearGradient" component={linearGradient} />
       <Stack.Screen name="snapcarousel" component={SnapCarousel} />
       <Stack.Screen name="visioncamera" component={VisionCamera} />
-      <Stack.Screen
-        name="registerValidation"
-        component={RegisterValidationScreen}
-      />
-      <Stack.Screen
-        name="registrationFormik"
-        component={RegistrstionFormikValidation}
-      />
-      <Stack.Screen
-        name="registrationHook"
-        component={RegistrationHookValidation}
-      />
 
       {/* <Stack.Screen name="AboutScreen" component={AboutScreen} /> */}
       {/* <Stack.Screen name="HomeScreen" component={HomeScreen} />

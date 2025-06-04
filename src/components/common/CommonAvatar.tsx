@@ -20,7 +20,7 @@ export const CommonAvatar = (props: AvatarProps) => {
   const [uri, setUri] = React.useState(props.source?.uri || undefined);
   const [visible, setVisible] = React.useState(false);
   const close = () => setVisible(false);
-  const open = () => setVisible(true);
+  // const open = () => setVisible(true);
   // const chooseImage = () => {
   //   ImagePicker.openPicker({
   //     width: 300,

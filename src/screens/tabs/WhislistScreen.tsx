@@ -1,5 +1,6 @@
-import {Alert, Button, StyleSheet, Text, View} from 'react-native';
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useMemo, useState} from 'react';
+import {Button, StyleSheet, Text, View} from 'react-native';
+
 import {useNavigation} from '@react-navigation/native';
 import {TextInput} from 'react-native-gesture-handler';
 
@@ -19,19 +20,6 @@ const WhislistScreen = () => {
     setCount(count + 1);
   };
 
-  // const decCnt = () => setCount(count - 1);
-  // const incCnt = () => setCount(count + 1);
-  // const incNum = () => setNum(num + 1);
-
-  // funcSet.add(incCnt);
-  // funcSet.add(decCnt);
-  // funcSet.add(incNum);
-
-  // const prevCountRef = useRef();
-
-  // useEffect(() => {
-  //   prevCountRef.current = count;
-  // }, [count]);
   function squareNum(number: number) {
     console.log('Squaring will be done!');
     return Math.pow(number, 2);
@@ -41,20 +29,10 @@ const WhislistScreen = () => {
       <Button title="Open Drawer" onPress={() => navigation?.openDrawer()} />
 
       <View style={styles.container2}>
-        {/* <Text>Current count: {count}</Text>
-        <Text>Previous count: {prevCountRef.current}</Text>
-        <Button onPress={() => setCount(count + 1)} title="Increment"></Button> */}
-
-        {/* <Text>Without useCallback Hook</Text> */}
-        {/* <Text>{funcSet.size}</Text> */}
-        {/* <Button onPress={incCnt} title="Increase Counter" />
-        <Button onPress={decCnt} title="Decrease Counter" />
-        <Button onPress={incNum} title="Increase Number" /> */}
-
         <TextInput
           keyboardType="decimal-pad"
           placeholder="Enter the number"
-          value={num}
+          value={num.toString()}
           onChange={onChangeHandler}
         />
         <Text>OUTPUT: {squaredNum}</Text>
