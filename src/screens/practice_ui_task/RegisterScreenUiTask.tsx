@@ -1,5 +1,3 @@
-// /* eslint-disable no-trailing-spaces */
-/* eslint-disable react-native/no-inline-styles */
 import React, {useRef, useState} from 'react';
 import {
   ScrollView,
@@ -12,14 +10,16 @@ import {
   Button,
 } from 'react-native';
 
-import {Formik} from 'formik';
 import * as Yup from 'yup';
+import {Formik} from 'formik';
+import {useDispatch} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
 import ImagePicker from 'react-native-image-crop-picker';
 import LinearGradient from 'react-native-linear-gradient';
-import {useNavigation} from '@react-navigation/native';
-import {hp, images, wp} from '../../helper';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-// import ProfileScreen from '../tabs/ProfileScreen';
+
+import {hp, images, wp} from '../../helper';
+import {addUser} from '../../slice/UserSlice';
 
 const validationSchema = Yup.object().shape({
   firstname: Yup.string().required('First Name is required').label('Name'),
@@ -43,13 +43,6 @@ const validationSchema = Yup.object().shape({
     .required('Confirm Password is required'),
 });
 const RegisterScreenUiTask = () => {
-  // const [first_name, setFistName] = useState<String>('');
-  // const [last_name, setLastName] = useState<String>('');
-  // const [phone_no, setPhoneNo] = useState<String>('');
-  // const [emailId, setEmail] = useState<String>('');
-  // const [Password, setPassword] = useState<String>('');
-  // const [profileimage, setProfileImage] = useState<String>('');
-
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
   const [uri, setUri] = useState<string>();
 
@@ -68,6 +61,22 @@ const RegisterScreenUiTask = () => {
       setUri(image.path);
     });
   };
+  const color = [
+    '#d16ba5',
+    '#c777b9',
+    '#ba83ca',
+    '#aa8fd8',
+    '#9a9ae1',
+    '#8aa7ec',
+    '#79b3f4',
+    '#69bff8',
+    '#52cffe',
+    '#41dfff',
+    '#46eefa',
+    '#5ffbf1',
+  ];
+
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -76,33 +85,11 @@ const RegisterScreenUiTask = () => {
         angleCenter={{x: 0.5, y: 0.5}}
         start={{x: 0.9, y: 0.9}}
         end={{x: 0, y: 0}}
-        colors={[
-          '#d16ba5',
-          '#c777b9',
-          '#ba83ca',
-          '#aa8fd8',
-          '#9a9ae1',
-          '#8aa7ec',
-          '#79b3f4',
-          '#69bff8',
-          '#52cffe',
-          '#41dfff',
-          '#46eefa',
-          '#5ffbf1',
-        ]}
+        colors={color}
         style={styles.linearGradient}>
         <ScrollView>
           <View style={styles.container}>
-            <Text
-              style={{
-                justifyContent: 'center',
-                alignSelf: 'center',
-                marginTop: hp(20),
-                fontSize: 30,
-                color: '#69bff8',
-              }}>
-              Registartion From
-            </Text>
+            <Text style={styles.registrationForm}>Registartion From</Text>
 
             <Formik
               initialValues={{
@@ -112,26 +99,27 @@ const RegisterScreenUiTask = () => {
                 email: '',
                 password: '',
                 confirmPassword: '',
-                profileimage: '',
               }}
               onSubmit={values => {
                 console.log('====>', values, uri);
 
-                navigation.navigate('LoginUiTask', {
-                  firstName: values.firstname,
-                  lastname: values.lastname,
-                  phoneNo: values.number,
-                  email: values.email,
-                  password: values.password,
-                  profilepath: uri,
-                });
+                dispatch(
+                  addUser({
+                    firstname: values.firstname,
+                    lastname: values.lastname,
+                    number: values.number,
+                    email: values.email,
+                    password: values.password,
+                    image: uri,
+                  }),
+                );
+                navigation.navigate('LoginUiTask');
               }}
-              // validator={() => ({})}
               validationSchema={validationSchema}>
               {({
                 handleChange,
                 handleBlur,
-                // handleSubmit,
+
                 values,
                 errors,
                 touched,
@@ -145,7 +133,7 @@ const RegisterScreenUiTask = () => {
                     />
                   </TouchableOpacity>
 
-                  <Text style={{textAlign: 'center'}}>Profile Photo</Text>
+                  <Text style={styles.profiletext}>Profile Photo</Text>
 
                   <TextInput
                     style={styles.inputTextStyle}
@@ -156,9 +144,10 @@ const RegisterScreenUiTask = () => {
                     autoCorrect={false}
                     returnKeyType={'next'}
                     onSubmitEditing={() => lastname.current?.focus()}
+                    placeholderTextColor={'black'}
                   />
                   {errors.firstname && touched.firstname && (
-                    <Text style={{color: 'red'}}>{errors.firstname}</Text>
+                    <Text style={styles.errortext}>{errors.firstname}</Text>
                   )}
                   <TextInput
                     ref={lastname}
@@ -169,10 +158,11 @@ const RegisterScreenUiTask = () => {
                     value={values.lastname}
                     autoCorrect={false}
                     returnKeyType={'next'}
+                    placeholderTextColor={'black'}
                     onSubmitEditing={() => phoneNo.current?.focus()}
                   />
                   {errors.lastname && touched.lastname && (
-                    <Text style={{color: 'red'}}>{errors.lastname}</Text>
+                    <Text style={styles.errortext}>{errors.lastname}</Text>
                   )}
 
                   <TextInput
@@ -185,9 +175,10 @@ const RegisterScreenUiTask = () => {
                     autoCorrect={false}
                     returnKeyType={'next'}
                     onSubmitEditing={() => email.current?.focus()}
+                    placeholderTextColor={'black'}
                   />
                   {errors.number && touched.number && (
-                    <Text style={{color: 'red'}}>{errors.number}</Text>
+                    <Text style={styles.errortext}>{errors.number}</Text>
                   )}
 
                   <TextInput
@@ -200,9 +191,10 @@ const RegisterScreenUiTask = () => {
                     autoCorrect={false}
                     returnKeyType={'next'}
                     onSubmitEditing={() => password.current?.focus()}
+                    placeholderTextColor={'black'}
                   />
                   {errors.email && touched.email && (
-                    <Text style={{color: 'red'}}>{errors.email}</Text>
+                    <Text style={styles.errortext}>{errors.email}</Text>
                   )}
 
                   <TextInput
@@ -215,9 +207,10 @@ const RegisterScreenUiTask = () => {
                     autoCorrect={false}
                     returnKeyType={'next'}
                     onSubmitEditing={() => confirmpassword.current?.focus()}
+                    placeholderTextColor={'black'}
                   />
                   {errors.password && touched.password && (
-                    <Text style={{color: 'red'}}>{errors.password}</Text>
+                    <Text style={styles.errortext}>{errors.password}</Text>
                   )}
 
                   <TextInput
@@ -230,9 +223,12 @@ const RegisterScreenUiTask = () => {
                     autoCorrect={false}
                     returnKeyType={'done'}
                     onSubmitEditing={() => handleSubmit()}
+                    placeholderTextColor={'black'}
                   />
                   {errors.confirmPassword && touched.confirmPassword && (
-                    <Text style={{color: 'red'}}>{errors.confirmPassword}</Text>
+                    <Text style={styles.errortext}>
+                      {errors.confirmPassword}
+                    </Text>
                   )}
 
                   <Button
@@ -241,10 +237,6 @@ const RegisterScreenUiTask = () => {
                     }}
                     title="Submit"
                   />
-                  {/* <Button
-                    onPress={() => navigation.navigate('LoginUiTask')}
-                    title="Login"
-                  /> */}
                 </View>
               )}
             </Formik>
@@ -258,6 +250,17 @@ const RegisterScreenUiTask = () => {
 export default RegisterScreenUiTask;
 
 const styles = StyleSheet.create({
+  profiletext: {textAlign: 'center'},
+  errortext: {
+    color: 'red',
+  },
+  registrationForm: {
+    justifyContent: 'center',
+    alignSelf: 'center',
+    marginTop: hp(20),
+    fontSize: 30,
+    color: '#69bff8',
+  },
   btnSubmit: {
     marginTop: wp(20),
     width: '60%',

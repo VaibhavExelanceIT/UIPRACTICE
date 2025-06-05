@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useRef} from 'react';
 import {
@@ -10,47 +11,26 @@ import {
   View,
 } from 'react-native';
 
+// import * as Yup from 'yup';
 import {Formik} from 'formik';
-import LinearGradient from 'react-native-linear-gradient';
-import * as Yup from 'yup';
+import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
-import {hp, wp} from '../../helper';
+import LinearGradient from 'react-native-linear-gradient';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
-const validationSchema = Yup.object().shape({
-  email: Yup.string()
-    .email('Please enter valid email')
-    .required('Email is required')
-    .label('Email'),
-  password2: Yup.string()
-    .matches(/\w*[a-z]\w*/, 'Password must have a small letter')
-    .matches(/\w*[A-Z]\w*/, 'Password must have a capital letter')
-    .matches(/\d/, 'Password must have a number')
-    .min(8, ({min}) => `Password must be at least ${min} characters`)
-    .required('Password is required')
-    .label('Password'),
-});
-const LoginScreenUITask = ({route}: any) => {
+import {hp, wp} from '../../helper';
+import {RootState} from '../../store/mystore';
+
+const LoginScreenUITask = () => {
   const password2 = useRef<TextInput>(null);
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
-  const {firstName, lastname, phoneNo, email, password, profilepath} =
-    route.params;
-  console.log(
-    firstName,
-    '--',
-    lastname,
-    '--',
-    phoneNo,
-    '--',
-    email,
-    '--',
-    password,
-    '--',
-    profilepath,
-  );
+
+  const users: any = useSelector<RootState>(state => state.users);
+
+  // console.log(typeof users);
+  const user = [...users];
 
   return (
-    // <View style={styles.mainContainer}>
     <>
       <LinearGradient
         useAngle={true}
@@ -90,21 +70,50 @@ const LoginScreenUITask = ({route}: any) => {
                 email: '',
                 password2: '',
               }}
-              onSubmit={values => {
-                if (email === values.email && password === values.password2) {
-                  navigation.navigate('HomeUiTask', {
-                    firstName: firstName,
-                    lastname: lastname,
-                    phoneNo: phoneNo,
-                    email: email,
-                    password: password,
-                    profilepath: profilepath,
+              onSubmit={
+                values => {
+                  const arr = user.some(item => {
+                    if (
+                      item.email == values.email &&
+                      item.password == values.password2
+                    ) {
+                      return true;
+                    } else {
+                      return false;
+                    }
                   });
-                } else {
-                  Alert.alert('Email or Password is Wrong');
-                  console.log('====>', values, profilepath);
+
+                  if (arr) {
+                    navigation.navigate('HomeUiTask');
+                  } else {
+                    Alert.alert('Email or Password is Wrong');
+                    console.log(
+                      'email && PAssword',
+                      user[0].email,
+                      user[0].password,
+                    );
+                  }
                 }
-              }}
+
+                // let i = 0;
+                // while (i < user.length) {
+                //   if (
+                //     user[i].email == values.email &&
+                //     user[i].password == values.password2
+                //   ) {
+                //     navigation.navigate('HomeUiTask');
+                //   } else {
+                //     Alert.alert('Email or Password is Wrong');
+                //     console.log(
+                //       'email && PAssword',
+                //       user[0].email,
+                //       user[0].password,
+                //     );
+                //     console.log(user[0].email === values.email);
+                //     console.log(user[0].password === values.password2);
+                //   }
+                //   i++;
+              }
               validator={() => ({})}>
               {({
                 handleChange,
@@ -124,6 +133,7 @@ const LoginScreenUITask = ({route}: any) => {
                     autoCorrect={false}
                     returnKeyType={'next'}
                     onSubmitEditing={() => password2.current?.focus()}
+                    placeholderTextColor={'black'}
                   />
                   {errors.email && touched.email && (
                     <Text style={{color: 'red'}}>{errors.email}</Text>
@@ -139,16 +149,13 @@ const LoginScreenUITask = ({route}: any) => {
                     autoCorrect={false}
                     returnKeyType={'done'}
                     onSubmitEditing={() => handleSubmit}
+                    placeholderTextColor={'black'}
                   />
                   {errors.password2 && touched.password2 && (
                     <Text style={{color: 'red'}}>{errors.password2}</Text>
                   )}
 
                   <Button onPress={() => handleSubmit()} title="Submit" />
-                  {/* <Button
-                    onPress={() => navigation.navigate('registrationFormik')}
-                    title="Submit"
-                  /> */}
                 </View>
               )}
             </Formik>
@@ -156,7 +163,6 @@ const LoginScreenUITask = ({route}: any) => {
         </ScrollView>
       </LinearGradient>
     </>
-    // </View>
   );
 };
 
@@ -178,7 +184,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
   },
   inputTextStyle: {
-    // flex: 1,
     color: '#000000',
     tintColor: '#000000',
     textAlign: 'center',
@@ -200,7 +205,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     marginTop: 20,
     flex: 1,
-    // backgroundColor: 'rgba(4, 67, 240, 0.4)',
+
     backgroundColor: '#ffffff',
   },
   linearGradient: {

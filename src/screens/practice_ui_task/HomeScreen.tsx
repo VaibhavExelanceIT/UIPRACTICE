@@ -1,49 +1,51 @@
-import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {FlatList, Image, StyleSheet, Text, View} from 'react-native';
 
-const HomeScreen = ({route}: any) => {
-  const {firstName, lastname, phoneNo, email, password, profilepath} =
-    route.params;
-  console.log(
-    firstName,
-    '--',
-    lastname,
-    '--',
-    phoneNo,
-    '--',
-    email,
-    '--',
-    password,
-    '--',
-    profilepath,
-  );
+import {useSelector} from 'react-redux';
+
+import {RootState} from '../../store/mystore';
+
+const HomeScreen = () => {
+  const users: any = useSelector<RootState>(state => state.users);
+
   return (
     <View style={styles.container}>
-      <ScrollView bounces={false}>
-        <View>
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
-            {/* <Text style={styles.textstyle}>HomeScreen</Text> */}
+      {users.length > 0 ? (
+        <FlatList
+          data={users}
+          renderItem={({item}) => {
+            return (
+              <View>
+                <Image
+                  style={styles.avatar}
+                  source={{
+                    uri: 'file://' + item.image,
+                  }}
+                />
+                <View style={styles.detailView}>
+                  <Text style={styles.textstyle}>
+                    Hello {item.firstname} !!!
+                  </Text>
 
-            <Text style={styles.textstyle}>Hello {firstName} !!!</Text>
+                  <Text style={styles.textstyle}>
+                    Last Name: {item.lastname}
+                  </Text>
 
-            <Text style={styles.textstyle}>Last Name: {lastname}</Text>
+                  <Text style={styles.textstyle}>Phone NO: {item.number}</Text>
 
-            <Text style={styles.textstyle}>Phone NO: {phoneNo}</Text>
-
-            <Text style={styles.textstyle}>Email Id: {email}</Text>
-
-            <Text style={styles.textstyle}>password: {password}</Text>
-            {/* <Text>{profilepath}</Text> */}
-          </View>
-
-          <Image
-            style={styles.avatar}
-            source={{
-              uri: 'file://' + profilepath,
-            }}
-          />
+                  <Text style={styles.textstyle}>
+                    Email Id: {item.email} password: {item.password}
+                  </Text>
+                </View>
+              </View>
+            );
+          }}
+        />
+      ) : (
+        <View style={styles.nodataviewstyle}>
+          <Text>No User data </Text>
         </View>
-      </ScrollView>
+      )}
     </View>
   );
 };
@@ -53,6 +55,7 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   textstyle: {
     fontSize: 20,
+    marginTop: 10,
   },
   container: {
     padding: 30,
@@ -71,5 +74,14 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  nodataviewstyle: {
+    flex: 1,
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
+  detailView: {
+    width: '90%',
+    flex: 1,
   },
 });

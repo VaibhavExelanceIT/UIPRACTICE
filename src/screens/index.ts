@@ -13,18 +13,24 @@ import ImageCropPicker from './thirdPratyLibrariesImplementation/ImageCropPicker
 import linearGradient from './thirdPratyLibrariesImplementation/linearGradient';
 import SnapCarousel from './thirdPratyLibrariesImplementation/SnapCarousel';
 import VisionCamera from './thirdPratyLibrariesImplementation/VisionCamera';
+import RegisterScreenUiTask from './practice_ui_task/RegisterScreenUiTask';
+import LoginScreenUITask from './practice_ui_task/LoginScreenUITask';
+import HomeScreenuser from './practice_ui_task/HomeScreen';
 
 export {
-    HomeScreen2,
-    HomeScreen,
-    LoginScreen,
-    FlexPracticeScreen,
-    RegisterScreen,
-    ProfileScreen,
-    WhislistScreen,
-    AboutScreen,
-    ImageCropPicker,
-    linearGradient,
-    SnapCarousel,
-    VisionCamera,
+  HomeScreen2,
+  HomeScreen,
+  LoginScreen,
+  FlexPracticeScreen,
+  RegisterScreen,
+  ProfileScreen,
+  WhislistScreen,
+  AboutScreen,
+  ImageCropPicker,
+  linearGradient,
+  SnapCarousel,
+  VisionCamera,
+  HomeScreenuser,
+  LoginScreenUITask,
+  RegisterScreenUiTask,
 };

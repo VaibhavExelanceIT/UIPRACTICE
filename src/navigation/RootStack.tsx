@@ -11,6 +11,9 @@ import {
   SnapCarousel,
   linearGradient,
   VisionCamera,
+  RegisterScreenUiTask,
+  LoginScreenUITask,
+  HomeScreenuser,
 } from '../screens';
 
 const Stack = createNativeStackNavigator();
@@ -23,7 +26,7 @@ function RootStack() {
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName="RegisterationUiTask">
+      initialRouteName="RegisterUiTask">
       <Stack.Screen name="FlexScreen" component={FlexPracticeScreen} />
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
       <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
@@ -38,6 +41,9 @@ function RootStack() {
       <Stack.Screen name="ProfileScreen" component={ProfileScreen} /> */}
       {/* <Stack.Screen name="BottomBar" component={BottomTabNavigation} /> */}
       <Stack.Screen name="DrawerNavigation" component={DrawerNavigation} />
+      <Stack.Screen name="RegisterUiTask" component={RegisterScreenUiTask} />
+      <Stack.Screen name="LoginUiTask" component={LoginScreenUITask} />
+      <Stack.Screen name="HomeUiTask" component={HomeScreenuser} />
     </Stack.Navigator>
   );
 }
