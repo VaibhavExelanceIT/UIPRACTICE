@@ -1,5 +1,6 @@
-import {StyleSheet, Button, TextInput, View, Alert} from 'react-native';
 import React from 'react';
+import {StyleSheet, Button, TextInput, View} from 'react-native';
+
 import {useNavigation} from '@react-navigation/native';
 // import {useRoute} from '@react-navigation/native';
 

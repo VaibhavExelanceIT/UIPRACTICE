@@ -10,44 +10,40 @@ import {
   View,
 } from 'react-native';
 
+import {useSelector} from 'react-redux';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {Formik} from 'formik';
 import LinearGradient from 'react-native-linear-gradient';
-import * as Yup from 'yup';
 import {useNavigation} from '@react-navigation/native';
-import {hp, wp} from '../../helper';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
-const validationSchema = Yup.object().shape({
-  email: Yup.string()
-    .email('Please enter valid email')
-    .required('Email is required')
-    .label('Email'),
-  password2: Yup.string()
-    .matches(/\w*[a-z]\w*/, 'Password must have a small letter')
-    .matches(/\w*[A-Z]\w*/, 'Password must have a capital letter')
-    .matches(/\d/, 'Password must have a number')
-    .min(8, ({min}) => `Password must be at least ${min} characters`)
-    .required('Password is required')
-    .label('Password'),
-});
-const LoginScreenUITask = ({route}: any) => {
+import {hp, wp} from '../../helper';
+
+const LoginScreenUITask = () => {
   const password2 = useRef<TextInput>(null);
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
-  const {firstName, lastname, phoneNo, email, password, profilepath} =
-    route.params;
-  console.log(
-    firstName,
-    '--',
-    lastname,
-    '--',
-    phoneNo,
-    '--',
-    email,
-    '--',
-    password,
-    '--',
-    profilepath,
-  );
+
+  const items: any = useSelector(state => state);
+  const user = items.users;
+  console.log('items', items);
+  // console.log('[...users]', [...user]);
+
+  function myPromise(value: {email: string; password2: string}) {
+    return new Promise((resolve, reject) => {
+      user.some((item: {email: string; password: string}) => {
+        if (item.email === value.email && item.password === value.password2) {
+          console.log('Resolve.........');
+          setTimeout(() => {
+            resolve(navigation.navigate('HomeUiTask', {email: value.email}));
+          }, 2000);
+        } else {
+          console.log('Reject.........');
+          setTimeout(() => {
+            reject(Alert.alert('Email or Password is Wrong'));
+          }, 2000);
+        }
+      });
+    });
+  }
 
   return (
     // <View style={styles.mainContainer}>
@@ -91,19 +87,7 @@ const LoginScreenUITask = ({route}: any) => {
                 password2: '',
               }}
               onSubmit={values => {
-                if (email === values.email && password === values.password2) {
-                  navigation.navigate('HomeUiTask', {
-                    firstName: firstName,
-                    lastname: lastname,
-                    phoneNo: phoneNo,
-                    email: email,
-                    password: password,
-                    profilepath: profilepath,
-                  });
-                } else {
-                  Alert.alert('Email or Password is Wrong');
-                  console.log('====>', values, profilepath);
-                }
+                myPromise(values);
               }}
               validator={() => ({})}>
               {({

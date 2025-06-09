@@ -1,6 +1,3 @@
-/* eslint-disable react/self-closing-comp */
-/* eslint-disable react-native/no-inline-styles */
-// /* eslint-disable react/self-closing-comp */
 import React, {useState} from 'react';
 import {
   StyleSheet,
@@ -16,6 +13,7 @@ import {
 // import {TextInput} from '../components/common/TextInput';
 
 import {useNavigation} from '@react-navigation/native';
+
 import {fs, hp, images, wp} from '../helper';
 import {CommonButton, CommonTextInput} from '../components';
 

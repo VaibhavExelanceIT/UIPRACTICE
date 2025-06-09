@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Image,
   Button,
+  Alert,
 } from 'react-native';
 
 import {Formik} from 'formik';
@@ -17,9 +18,12 @@ import * as Yup from 'yup';
 import ImagePicker from 'react-native-image-crop-picker';
 import LinearGradient from 'react-native-linear-gradient';
 import {useNavigation} from '@react-navigation/native';
-import {hp, images, wp} from '../../helper';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useDispatch, useSelector} from 'react-redux';
+
 // import ProfileScreen from '../tabs/ProfileScreen';
+import {addUserAction} from '../../Redux';
+import {hp, images, wp} from '../../helper';
 
 const validationSchema = Yup.object().shape({
   firstname: Yup.string().required('First Name is required').label('Name'),
@@ -69,6 +73,15 @@ const RegisterScreenUiTask = () => {
     });
   };
 
+  const items: any = useSelector(state => state);
+  const user = items.users;
+
+  const dispatch = useDispatch();
+  const addItem = (item: any) => {
+    console.log('item', item);
+    dispatch(addUserAction(item));
+  };
+
   return (
     <>
       <LinearGradient
@@ -112,19 +125,44 @@ const RegisterScreenUiTask = () => {
                 email: '',
                 password: '',
                 confirmPassword: '',
-                profileimage: '',
+                profileimage: uri,
               }}
               onSubmit={values => {
-                console.log('====>', values, uri);
+                values.profileimage = uri;
+                // console.log('====>', values, uri);
 
-                navigation.navigate('LoginUiTask', {
-                  firstName: values.firstname,
-                  lastname: values.lastname,
-                  phoneNo: values.number,
-                  email: values.email,
-                  password: values.password,
-                  profilepath: uri,
-                });
+                const arr = user.some(
+                  (item: any) => item.email === values.email,
+                  // {
+                  // if (
+                  //   item.email === values.email
+                  //   // item.password === values.password
+                  // ) {
+                  //   return true;
+                  // } else {
+                  //   return false;
+                  // }
+                  // }
+                );
+
+                if (arr) {
+                  Alert.alert('Email is already available');
+                  // navigation.navigate('HomeUiTask');
+                } else {
+                  addItem(values);
+                  navigation.navigate('LoginUiTask');
+                }
+                // navigation.navigate(
+                //   'LoginUiTask',
+                //   //   {
+                //   //   firstName: values.firstname,
+                //   //   lastname: values.lastname,
+                //   //   phoneNo: values.number,
+                //   //   email: values.email,
+                //   //   password: values.password,
+                //   //   profilepath: uri,
+                //   // }
+                // );
               }}
               // validator={() => ({})}
               validationSchema={validationSchema}>
@@ -241,6 +279,15 @@ const RegisterScreenUiTask = () => {
                     }}
                     title="Submit"
                   />
+
+                  <View style={styles.loginbtn}>
+                    <Button
+                      onPress={() => {
+                        navigation.navigate('LoginUiTask');
+                      }}
+                      title="Login"
+                    />
+                  </View>
                   {/* <Button
                     onPress={() => navigation.navigate('LoginUiTask')}
                     title="Login"
@@ -258,6 +305,7 @@ const RegisterScreenUiTask = () => {
 export default RegisterScreenUiTask;
 
 const styles = StyleSheet.create({
+  loginbtn: {marginTop: 20},
   btnSubmit: {
     marginTop: wp(20),
     width: '60%',
