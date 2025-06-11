@@ -1,56 +1,78 @@
-/* eslint-disable react-native/no-inline-styles */
-import React, {useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {
+  Text,
+  View,
   Alert,
   Button,
-  ScrollView,
-  StyleSheet,
-  Text,
   TextInput,
-  View,
+  StyleSheet,
+  ScrollView,
 } from 'react-native';
 
 import {Formik} from 'formik';
-import LinearGradient from 'react-native-linear-gradient';
-import * as Yup from 'yup';
 import {useNavigation} from '@react-navigation/native';
-import {hp, wp} from '../../helper';
+import LinearGradient from 'react-native-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
-const validationSchema = Yup.object().shape({
-  email: Yup.string()
-    .email('Please enter valid email')
-    .required('Email is required')
-    .label('Email'),
-  password2: Yup.string()
-    .matches(/\w*[a-z]\w*/, 'Password must have a small letter')
-    .matches(/\w*[A-Z]\w*/, 'Password must have a capital letter')
-    .matches(/\d/, 'Password must have a number')
-    .min(8, ({min}) => `Password must be at least ${min} characters`)
-    .required('Password is required')
-    .label('Password'),
-});
-const LoginScreenUITask = ({route}: any) => {
-  const password2 = useRef<TextInput>(null);
+import {hp, wp} from '../../helper';
+
+interface usertype {
+  email: string;
+  number: string;
+  password: string;
+  lastname: string;
+  firstname: string;
+  profileimage: string;
+  confirmPassword: string;
+}
+let prevUser: usertype[];
+const LoginScreenUITask = () => {
+  // let email, Password;
+
+  const password = useRef<TextInput>(null);
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
-  const {firstName, lastname, phoneNo, email, password, profilepath} =
-    route.params;
-  console.log(
-    firstName,
-    '--',
-    lastname,
-    '--',
-    phoneNo,
-    '--',
-    email,
-    '--',
-    password,
-    '--',
-    profilepath,
-  );
+
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('users');
+      if (jsonValue !== null) {
+        prevUser = JSON.parse(jsonValue);
+        console.log('prev users', prevUser);
+      }
+    } catch (e) {
+      console.warn(e);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  function submitHandler(values: {email: string; password: string}) {
+    const res = prevUser.some(value => {
+      console.log(value.email === values.email);
+      console.log(value.password === values.password);
+      return value.email === values.email && value.password === values.password;
+    });
+    console.log(res);
+
+    if (res) {
+      // email = values.email;
+      // Password = values.password;
+      // console.log(email);
+      // console.log(Password);
+      navigation.navigate('HomeUiTask', {
+        email: values.email,
+        password: values.password,
+      });
+    } else {
+      console.log('====>', values);
+      Alert.alert('Email or Password is Wrong');
+    }
+  }
 
   return (
-    // <View style={styles.mainContainer}>
     <>
       <LinearGradient
         useAngle={true}
@@ -74,36 +96,15 @@ const LoginScreenUITask = ({route}: any) => {
         style={styles.linearGradient}>
         <ScrollView>
           <View style={styles.container}>
-            <Text
-              style={{
-                justifyContent: 'center',
-                alignSelf: 'center',
-                marginTop: hp(20),
-                fontSize: 30,
-                color: '#69bff8',
-              }}>
-              Registartion From
-            </Text>
+            <Text style={styles.LoginTextStyle}>{' Login From'}</Text>
 
             <Formik
               initialValues={{
                 email: '',
-                password2: '',
+                password: '',
               }}
               onSubmit={values => {
-                if (email === values.email && password === values.password2) {
-                  navigation.navigate('HomeUiTask', {
-                    firstName: firstName,
-                    lastname: lastname,
-                    phoneNo: phoneNo,
-                    email: email,
-                    password: password,
-                    profilepath: profilepath,
-                  });
-                } else {
-                  Alert.alert('Email or Password is Wrong');
-                  console.log('====>', values, profilepath);
-                }
+                submitHandler(values);
               }}
               validator={() => ({})}>
               {({
@@ -116,39 +117,34 @@ const LoginScreenUITask = ({route}: any) => {
               }) => (
                 <View style={styles.container}>
                   <TextInput
-                    style={styles.inputTextStyle}
                     placeholder="Email"
-                    onChangeText={handleChange('email')}
-                    onBlur={handleBlur('email')}
-                    value={values.email}
                     autoCorrect={false}
+                    value={values.email}
                     returnKeyType={'next'}
-                    onSubmitEditing={() => password2.current?.focus()}
+                    onBlur={handleBlur('email')}
+                    style={styles.inputTextStyle}
+                    onChangeText={handleChange('email')}
+                    onSubmitEditing={() => password.current?.focus()}
                   />
                   {errors.email && touched.email && (
-                    <Text style={{color: 'red'}}>{errors.email}</Text>
+                    <Text style={styles.texterrorstyle}>{errors.email}</Text>
                   )}
 
                   <TextInput
-                    ref={password2}
-                    style={styles.inputTextStyle}
-                    placeholder="Password"
-                    onChangeText={handleChange('password2')}
-                    onBlur={handleBlur('password2')}
-                    value={values.password2}
+                    ref={password}
                     autoCorrect={false}
                     returnKeyType={'done'}
+                    placeholder="Password"
+                    value={values.password}
+                    style={styles.inputTextStyle}
+                    onBlur={handleBlur('password')}
                     onSubmitEditing={() => handleSubmit}
+                    onChangeText={handleChange('password')}
                   />
-                  {errors.password2 && touched.password2 && (
-                    <Text style={{color: 'red'}}>{errors.password2}</Text>
+                  {errors.password && touched.password && (
+                    <Text style={styles.texterrorstyle}>{errors.password}</Text>
                   )}
-
                   <Button onPress={() => handleSubmit()} title="Submit" />
-                  {/* <Button
-                    onPress={() => navigation.navigate('registrationFormik')}
-                    title="Submit"
-                  /> */}
                 </View>
               )}
             </Formik>
@@ -156,62 +152,69 @@ const LoginScreenUITask = ({route}: any) => {
         </ScrollView>
       </LinearGradient>
     </>
-    // </View>
   );
 };
 
 export default LoginScreenUITask;
 
 const styles = StyleSheet.create({
+  texterrorstyle: {
+    color: 'red',
+  },
+  LoginTextStyle: {
+    fontSize: 30,
+    marginTop: hp(20),
+    color: '#69bff8',
+    alignSelf: 'center',
+    justifyContent: 'center',
+  },
   btnSubmit: {
-    marginTop: wp(20),
-    width: '60%',
     height: 30,
+    width: '60%',
+    borderRadius: 20,
+    marginTop: wp(20),
     alignSelf: 'center',
     backgroundColor: '#d16ba5',
-    borderRadius: 20,
   },
   mainContainer: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'red',
+    justifyContent: 'center',
   },
   inputTextStyle: {
-    // flex: 1,
-    color: '#000000',
-    tintColor: '#000000',
-    textAlign: 'center',
-    alignItems: 'center',
+    margin: 5,
+    padding: 10,
     width: '100%',
-    backgroundColor: '#FAF9F6',
     borderWidth: 1,
     borderRadius: 20,
-    padding: 10,
-    margin: 5,
+    color: '#000000',
+    textAlign: 'center',
+    tintColor: '#000000',
+    alignItems: 'center',
+    backgroundColor: '#FAF9F6',
     borderBlockColor: '#000000',
   },
   container: {
-    marginBottom: 40,
-    paddingHorizontal: wp(2),
-    paddingVertical: hp(10),
-    marginHorizontal: wp(20),
-    justifyContent: 'center',
-    borderRadius: 30,
-    marginTop: 20,
     flex: 1,
-    // backgroundColor: 'rgba(4, 67, 240, 0.4)',
+    marginTop: 20,
+    marginBottom: 40,
+    borderRadius: 30,
+    paddingVertical: hp(10),
+    justifyContent: 'center',
+    marginHorizontal: wp(20),
+    paddingHorizontal: wp(2),
     backgroundColor: '#ffffff',
   },
   linearGradient: {
     flex: 1,
   },
   avatar: {
-    height: 150,
     width: 150,
-    marginInline: 'auto',
+    height: 150,
     borderRadius: 100,
-    justifyContent: 'center',
     alignItems: 'center',
+    marginInline: 'auto',
+    justifyContent: 'center',
   },
 });

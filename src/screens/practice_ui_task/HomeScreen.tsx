@@ -1,48 +1,90 @@
-import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import {images} from '../../helper';
+import React, {useEffect, useState} from 'react';
+import {Button, Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+interface usertype {
+  email: string;
+  number: string;
+  password: string;
+  lastname: string;
+  firstname: string;
+  profileimage: string;
+  confirmPassword: string;
+}
+let prevUser: usertype[];
 const HomeScreen = ({route}: any) => {
-  const {firstName, lastname, phoneNo, email, password, profilepath} =
-    route.params;
-  console.log(
-    firstName,
-    '--',
-    lastname,
-    '--',
-    phoneNo,
-    '--',
-    email,
-    '--',
-    password,
-    '--',
-    profilepath,
-  );
+  const [isdata, setIsdata] = useState(false);
+  const [phoneNo, setPhoneNo] = useState('');
+  const [userEmail, setEmail] = useState('');
+  const [userImage, setImage] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [userPassword, setPassword] = useState('');
+
+  const {email} = route.params;
+  console.log(route.params);
+
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('users');
+      if (jsonValue !== null) {
+        prevUser = JSON.parse(jsonValue);
+        console.log('prev users', prevUser);
+      }
+    } catch (e) {
+      console.warn(e);
+    }
+  };
+
+  const getUserData = () => {
+    const res = prevUser.filter(value => {
+      if (value.email === email) {
+        console.log(value.email);
+        setEmail(value.email);
+        setPhoneNo(value.number);
+        setLastName(value.lastname);
+        setPassword(value.password);
+        setImage(value.profileimage);
+        setFirstName(value.firstname);
+        return value;
+      }
+    });
+    if (res) {
+      setIsdata(true);
+      console.log(res);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <View style={styles.container}>
       <ScrollView bounces={false}>
-        <View>
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
-            {/* <Text style={styles.textstyle}>HomeScreen</Text> */}
+        {isdata && (
+          <View>
+            <View style={styles.componentView}>
+              <Image
+                style={styles.avatar}
+                source={{
+                  uri: 'file://' + userImage,
+                }}
+              />
+              <Text style={styles.textstyle}>Hello {firstName} !!!</Text>
 
-            <Text style={styles.textstyle}>Hello {firstName} !!!</Text>
+              <Text style={styles.textstyle}>Last Name: {lastName}</Text>
 
-            <Text style={styles.textstyle}>Last Name: {lastname}</Text>
+              <Text style={styles.textstyle}>Phone NO: {phoneNo}</Text>
 
-            <Text style={styles.textstyle}>Phone NO: {phoneNo}</Text>
+              <Text style={styles.textstyle}>Email Id: {userEmail}</Text>
 
-            <Text style={styles.textstyle}>Email Id: {email}</Text>
-
-            <Text style={styles.textstyle}>password: {password}</Text>
-            {/* <Text>{profilepath}</Text> */}
+              <Text style={styles.textstyle}>password: {userPassword}</Text>
+            </View>
           </View>
-
-          <Image
-            style={styles.avatar}
-            source={{
-              uri: 'file://' + profilepath,
-            }}
-          />
+        )}
+        <View style={styles.stylebtn}>
+          <Button onPress={getUserData} title="Fetch data" />
         </View>
       </ScrollView>
     </View>
@@ -52,25 +94,32 @@ const HomeScreen = ({route}: any) => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+  stylebtn: {
+    margin: 20,
+  },
+  componentView: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   textstyle: {
     fontSize: 20,
   },
   container: {
-    padding: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
     flex: 1,
+    padding: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#41dfff',
   },
   textData: {
     textAlign: 'center',
   },
   avatar: {
-    height: 150,
     width: 150,
-    marginInline: 'auto',
+    height: 150,
     borderRadius: 100,
-    justifyContent: 'center',
     alignItems: 'center',
+    marginInline: 'auto',
+    justifyContent: 'center',
   },
 });
