@@ -11,7 +11,7 @@ interface usertype {
   profileimage: string;
   confirmPassword: string;
 }
-let prevUser: usertype[];
+// let prevUser: usertype[];
 const HomeScreen = ({route}: any) => {
   const [isdata, setIsdata] = useState(false);
   const [phoneNo, setPhoneNo] = useState('');
@@ -21,6 +21,8 @@ const HomeScreen = ({route}: any) => {
   const [firstName, setFirstName] = useState('');
   const [userPassword, setPassword] = useState('');
 
+  const [prevUser, setPrevUser] = useState<usertype[]>([]);
+
   const {email} = route.params;
   console.log(route.params);
 
@@ -28,7 +30,7 @@ const HomeScreen = ({route}: any) => {
     try {
       const jsonValue = await AsyncStorage.getItem('users');
       if (jsonValue !== null) {
-        prevUser = JSON.parse(jsonValue);
+        setPrevUser(JSON.parse(jsonValue));
         console.log('prev users', prevUser);
       }
     } catch (e) {
@@ -37,7 +39,7 @@ const HomeScreen = ({route}: any) => {
   };
 
   const getUserData = () => {
-    const res = prevUser.filter(value => {
+    const res = prevUser?.filter(value => {
       if (value.email === email) {
         console.log(value.email);
         setEmail(value.email);
