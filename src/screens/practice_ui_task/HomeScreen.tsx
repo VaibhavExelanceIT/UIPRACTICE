@@ -1,51 +1,75 @@
-import React from 'react';
-import {FlatList, Image, StyleSheet, Text, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 
 import {useSelector} from 'react-redux';
 
 import {RootState} from '../../store/mystore';
+interface usertype {
+  email: string;
+  number: string;
+  password: string;
+  lastname: string;
+  firstname: string;
+  image: string;
+  confirmPassword: string;
+}
+const HomeScreen = ({route}: any) => {
+  // const [isdata, setIsdata] = useState(false);
+  const [phoneNo, setPhoneNo] = useState('');
+  const [userEmail, setEmail] = useState('');
+  const [userImage, setImage] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [userPassword, setPassword] = useState('');
+  const users: any = useSelector<RootState>(state => state.reducer.users);
 
-const HomeScreen = () => {
-  const users: any = useSelector<RootState>(state => state.users);
+  const {email} = route.params;
+  function getData() {
+    const res = users.filter((value: usertype) => {
+      if (value.email === email) {
+        console.log(value.email);
+        setEmail(value.email);
+        setPhoneNo(value.number);
+        setLastName(value.lastname);
+        setPassword(value.password);
+        setImage(value.image);
+        setFirstName(value.firstname);
+        return value;
+      }
+    });
+    if (res) {
+      console.log(res);
+    }
+  }
+  console.log(userImage);
 
+  useEffect(() => {
+    getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <View style={styles.container}>
-      {users.length > 0 ? (
-        <FlatList
-          data={users}
-          renderItem={({item}) => {
-            return (
-              <View>
-                <Image
-                  style={styles.avatar}
-                  source={{
-                    uri: 'file://' + item.image,
-                  }}
-                />
-                <View style={styles.detailView}>
-                  <Text style={styles.textstyle}>
-                    Hello {item.firstname} !!!
-                  </Text>
+      <ScrollView bounces={false}>
+        <View>
+          <View style={styles.componentView}>
+            <Image
+              style={styles.avatar}
+              source={{
+                uri: userImage,
+              }}
+            />
+            <Text style={styles.textstyle}>Hello {firstName} !!!</Text>
 
-                  <Text style={styles.textstyle}>
-                    Last Name: {item.lastname}
-                  </Text>
+            <Text style={styles.textstyle}>Last Name: {lastName}</Text>
 
-                  <Text style={styles.textstyle}>Phone NO: {item.number}</Text>
+            <Text style={styles.textstyle}>Phone NO: {phoneNo}</Text>
 
-                  <Text style={styles.textstyle}>
-                    Email Id: {item.email} password: {item.password}
-                  </Text>
-                </View>
-              </View>
-            );
-          }}
-        />
-      ) : (
-        <View style={styles.nodataviewstyle}>
-          <Text>No User data </Text>
+            <Text style={styles.textstyle}>Email Id: {userEmail}</Text>
+
+            <Text style={styles.textstyle}>password: {userPassword}</Text>
+          </View>
         </View>
-      )}
+      </ScrollView>
     </View>
   );
 };
@@ -53,35 +77,32 @@ const HomeScreen = () => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+  stylebtn: {
+    margin: 20,
+  },
+  componentView: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   textstyle: {
     fontSize: 20,
-    marginTop: 10,
   },
   container: {
-    padding: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
     flex: 1,
+    padding: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#41dfff',
   },
   textData: {
     textAlign: 'center',
   },
   avatar: {
-    height: 150,
     width: 150,
-    marginInline: 'auto',
+    height: 150,
     borderRadius: 100,
-    justifyContent: 'center',
     alignItems: 'center',
-  },
-  nodataviewstyle: {
-    flex: 1,
+    marginInline: 'auto',
     justifyContent: 'center',
-    alignSelf: 'center',
-  },
-  detailView: {
-    width: '90%',
-    flex: 1,
   },
 });

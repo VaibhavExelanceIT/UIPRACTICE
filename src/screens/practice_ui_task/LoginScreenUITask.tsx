@@ -1,17 +1,14 @@
-/* eslint-disable eqeqeq */
-/* eslint-disable react-native/no-inline-styles */
 import React, {useRef} from 'react';
 import {
+  Text,
+  View,
   Alert,
   Button,
-  ScrollView,
-  StyleSheet,
-  Text,
   TextInput,
-  View,
+  StyleSheet,
+  ScrollView,
 } from 'react-native';
 
-// import * as Yup from 'yup';
 import {Formik} from 'formik';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
@@ -22,14 +19,33 @@ import {hp, wp} from '../../helper';
 import {RootState} from '../../store/mystore';
 
 const LoginScreenUITask = () => {
-  const password2 = useRef<TextInput>(null);
+  const password = useRef<TextInput>(null);
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
 
-  const users: any = useSelector<RootState>(state => state.users);
+  const users: any = useSelector<RootState>(state => state.reducer.users);
 
-  // console.log(typeof users);
+  const submitHandler = (values: {email: string; password: string}) => {
+    const arr = user.some(item => {
+      if (item.email == values.email && item.password == values.password) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    if (arr) {
+      navigation.navigate('HomeUiTask', {
+        email: values.email,
+        password: values.password,
+      });
+    } else {
+      Alert.alert('Email or Password is Wrong');
+    }
+  };
+
+  // console.log(users);
   const user = [...users];
-
+  console.log(user);
   return (
     <>
       <LinearGradient
@@ -54,66 +70,16 @@ const LoginScreenUITask = () => {
         style={styles.linearGradient}>
         <ScrollView>
           <View style={styles.container}>
-            <Text
-              style={{
-                justifyContent: 'center',
-                alignSelf: 'center',
-                marginTop: hp(20),
-                fontSize: 30,
-                color: '#69bff8',
-              }}>
-              Registartion From
-            </Text>
+            <Text style={styles.registrationTest}>{'Registartion From'}</Text>
 
             <Formik
               initialValues={{
                 email: '',
-                password2: '',
+                password: '',
               }}
-              onSubmit={
-                values => {
-                  const arr = user.some(item => {
-                    if (
-                      item.email == values.email &&
-                      item.password == values.password2
-                    ) {
-                      return true;
-                    } else {
-                      return false;
-                    }
-                  });
-
-                  if (arr) {
-                    navigation.navigate('HomeUiTask');
-                  } else {
-                    Alert.alert('Email or Password is Wrong');
-                    console.log(
-                      'email && PAssword',
-                      user[0].email,
-                      user[0].password,
-                    );
-                  }
-                }
-
-                // let i = 0;
-                // while (i < user.length) {
-                //   if (
-                //     user[i].email == values.email &&
-                //     user[i].password == values.password2
-                //   ) {
-                //     navigation.navigate('HomeUiTask');
-                //   } else {
-                //     Alert.alert('Email or Password is Wrong');
-                //     console.log(
-                //       'email && PAssword',
-                //       user[0].email,
-                //       user[0].password,
-                //     );
-                //     console.log(user[0].email === values.email);
-                //     console.log(user[0].password === values.password2);
-                //   }
-                //   i++;
-              }
+              onSubmit={values => {
+                submitHandler(values);
+              }}
               validator={() => ({})}>
               {({
                 handleChange,
@@ -125,34 +91,34 @@ const LoginScreenUITask = () => {
               }) => (
                 <View style={styles.container}>
                   <TextInput
-                    style={styles.inputTextStyle}
                     placeholder="Email"
-                    onChangeText={handleChange('email')}
-                    onBlur={handleBlur('email')}
-                    value={values.email}
                     autoCorrect={false}
+                    value={values.email}
                     returnKeyType={'next'}
-                    onSubmitEditing={() => password2.current?.focus()}
+                    onBlur={handleBlur('email')}
+                    style={styles.inputTextStyle}
                     placeholderTextColor={'black'}
+                    onChangeText={handleChange('email')}
+                    onSubmitEditing={() => password.current?.focus()}
                   />
                   {errors.email && touched.email && (
-                    <Text style={{color: 'red'}}>{errors.email}</Text>
+                    <Text style={styles.errorText}>{errors.email}</Text>
                   )}
 
                   <TextInput
-                    ref={password2}
-                    style={styles.inputTextStyle}
-                    placeholder="Password"
-                    onChangeText={handleChange('password2')}
-                    onBlur={handleBlur('password2')}
-                    value={values.password2}
+                    ref={password}
                     autoCorrect={false}
+                    placeholder="Password"
                     returnKeyType={'done'}
-                    onSubmitEditing={() => handleSubmit}
+                    value={values.password}
+                    style={styles.inputTextStyle}
                     placeholderTextColor={'black'}
+                    onBlur={handleBlur('password')}
+                    onSubmitEditing={() => handleSubmit}
+                    onChangeText={handleChange('password')}
                   />
-                  {errors.password2 && touched.password2 && (
-                    <Text style={{color: 'red'}}>{errors.password2}</Text>
+                  {errors.password && touched.password && (
+                    <Text style={styles.errorText}>{errors.password}</Text>
                   )}
 
                   <Button onPress={() => handleSubmit()} title="Submit" />
@@ -169,54 +135,63 @@ const LoginScreenUITask = () => {
 export default LoginScreenUITask;
 
 const styles = StyleSheet.create({
+  errorText: {
+    color: 'red',
+  },
+  registrationTest: {
+    fontSize: 30,
+    color: '#69bff8',
+    marginTop: hp(20),
+    alignSelf: 'center',
+    justifyContent: 'center',
+  },
   btnSubmit: {
-    marginTop: wp(20),
-    width: '60%',
     height: 30,
+    width: '60%',
+    borderRadius: 20,
+    marginTop: wp(20),
     alignSelf: 'center',
     backgroundColor: '#d16ba5',
-    borderRadius: 20,
   },
   mainContainer: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: 'red',
   },
   inputTextStyle: {
+    margin: 5,
+    padding: 10,
+    width: '100%',
+    borderWidth: 1,
     color: '#000000',
-    tintColor: '#000000',
+    borderRadius: 20,
     textAlign: 'center',
     alignItems: 'center',
-    width: '100%',
+    tintColor: '#000000',
     backgroundColor: '#FAF9F6',
-    borderWidth: 1,
-    borderRadius: 20,
-    padding: 10,
-    margin: 5,
     borderBlockColor: '#000000',
   },
   container: {
+    flex: 1,
+    marginTop: 20,
     marginBottom: 40,
-    paddingHorizontal: wp(2),
+    borderRadius: 30,
     paddingVertical: hp(10),
     marginHorizontal: wp(20),
+    paddingHorizontal: wp(2),
     justifyContent: 'center',
-    borderRadius: 30,
-    marginTop: 20,
-    flex: 1,
-
     backgroundColor: '#ffffff',
   },
   linearGradient: {
     flex: 1,
   },
   avatar: {
-    height: 150,
     width: 150,
-    marginInline: 'auto',
+    height: 150,
     borderRadius: 100,
-    justifyContent: 'center',
     alignItems: 'center',
+    marginInline: 'auto',
+    justifyContent: 'center',
   },
 });
